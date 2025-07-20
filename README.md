@@ -12,8 +12,8 @@ An AI-powered web application that helps HR professionals assess how well a cand
 
 ## 📸 Screenshots
 
-![Screenshot 1](./screenshots/screenshot1.png)
-![Screenshot 2](./screenshots/screenshot2.png)
+![Screenshot 1](./screenshots/screenshot01.png)
+![Screenshot 2](./screenshots/screenshot02.png)
 
 ## 🛠 Tech Stack
 
