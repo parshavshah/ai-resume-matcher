@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI HR Candidate Assessment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            margin: 0 auto;
+        }
+        .score-excellent { background-color: #28a745; }
+        .score-good { background-color: #17a2b8; }
+        .score-average { background-color: #ffc107; color: #000; }
+        .score-poor { background-color: #dc3545; }
+        .upload-area {
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center mb-5">🎯 AI HR Candidate Assessment</h1>
+                
+                <% if (error) { %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= error %>
+                    </div>
+                <% } %>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">📋 Assessment Form</h5>
+                        <form action="/assess" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="jobDescription" class="form-label">Job Description</label>
+                                <textarea 
+                                    class="form-control" 
+                                    id="jobDescription" 
+                                    name="jobDescription" 
+                                    rows="8" 
+                                    placeholder="Paste the complete job description here..."
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="resume" class="form-label">Candidate Resume</label>
+                                <div class="upload-area">
+                                    <input 
+                                        type="file" 
+                                        class="form-control" 
+                                        id="resume" 
+                                        name="resume" 
+                                        accept=".txt,.doc,.docx,.pdf"
+                                        required
+                                    >
+                                    <small class="text-muted mt-2 d-block">
+                                        Supported formats: TXT, DOC, DOCX, PDF
+                                    </small>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                🚀 Analyze Candidate Fit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <% if (result) { %>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">📊 Assessment Results</h5>
+                            
+                            <div class="row mb-4">
+                                <div class="col-md-4 text-center">
+                                    <div class="score-circle <%= 
+                                        result.score >= 80 ? 'score-excellent' : 
+                                        result.score >= 60 ? 'score-good' : 
+                                        result.score >= 40 ? 'score-average' : 'score-poor' 
+                                    %>">
+                                        <%= result.score %>%
+                                    </div>
+                                    <p class="mt-2 fw-bold">Compatibility Score</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6>🎯 Overall Recommendation:</h6>
+                                    <p class="mb-3"><%= result.recommendation %></p>
+                                    
+                                    <h6>💭 Reasoning:</h6>
+                                    <p><%= result.reasoning %></p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>✅ Key Strengths:</h6>
+                                    <ul class="list-group list-group-flush">
+                                        <% result.strengths.forEach(strength => { %>
+                                            <li class="list-group-item border-0 px-0">
+                                                <i class="text-success">✓</i> <%= strength %>
+                                            </li>
+                                        <% }); %>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>⚠️ Areas of Concern:</h6>
+                                    <ul class="list-group list-group-flush">
+                                        <% result.weaknesses.forEach(weakness => { %>
+                                            <li class="list-group-item border-0 px-0">
+                                                <i class="text-warning">!</i> <%= weakness %>
+                                            </li>
+                                        <% }); %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

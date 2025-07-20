@@ -6,9 +6,21 @@ hidden = [".config", "package-lock.json"]
 channel = "stable-24_05"
 
 [deployment]
-run = ["node", "index.js"]
+run = ["sh", "-c", "node index.js"]
 deploymentTarget = "cloudrun"
 
 [[ports]]
 localPort = 3000
 externalPort = 80
+
+[workflows]
+runButton = "Run HR Assessment App"
+
+[[workflows.workflow]]
+name = "Run HR Assessment App"
+author = 43811482
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node index.js"
