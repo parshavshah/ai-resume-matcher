@@ -26,5 +26,5 @@ An AI-powered web application that helps HR professionals assess how well a cand
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/ai-resume-matcher.git
+   git clone https://github.com/parshavshah/ai-resume-matcher.git
    cd ai-resume-matcher
